@@ -419,6 +419,8 @@ function uploadFileToS3(accessId, postPolicy, signature) {
 }
 
 //---------------------------------------------------------------------------------
+//---------------------- Actual POST request to upload file into S3 bucket---------
+//---------------------------------------------------------------------------------
 
 http.get(policy, (resp) => {
   let data = "";
