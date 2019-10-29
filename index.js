@@ -2,21 +2,25 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 
-const password = 'jxe23BsvV8j79DYAvbtvKaQB';
-const email = 'sparkhomenko@sonatype.com';
+const password = 'your_password';
+const email = 'your_email_to_send_results_to';
 const githubactions = 'github-actions';
 
-const filePath = "/Users/stanislavparkhomenko/IdeaProjects/my-java-project/target/azure-pipelines-test-1.0-SNAPSHOT.jar";
+const filePath = "your_zip_file_to_scan";
 
 const hostname = "production-sonatype-nvs-cloud-scanner-file-storage.s3.amazonaws.com";
-const path = "";
+const path = "/";
 const policy = "http://production-sonatype-nvs-cloud-scanner-post-policy.s3-website-us-east-1.amazonaws.com/post-policy-signed.json";
 
 const ascii64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
+// a uuid needed for separating form-data parameters in post request
+// https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4
+const boundary = "34a15cb8-1e8e-47f1-a71c-76fe5ff7c3e7";
+
 function random_salt(length) {
-  var salt = '';
-  for (var i = 0; i < length; i++) {
+  let salt = '';
+  for (let i = 0; i < length; i++) {
     salt += ascii64.charAt(Math.floor(64 * Math.random()));
   }
   return salt;
@@ -101,31 +105,10 @@ function to64_single(str, idx0) {
   return to64(v, 2);
 }
 
-function ascii_to_bin(ch) {
-  const lz = 'z'.charCodeAt(0),
-      la = 'a'.charCodeAt(0),
-      uz = 'Z'.charCodeAt(0),
-      ua = 'A'.charCodeAt(0),
-      ni = '9'.charCodeAt(0),
-      dt = '.'.charCodeAt(0);
-
-  if (ch > lz) {return 0;}
-  if (ch >= la) {return (ch - la + 38);}
-  if (ch > uz) {return 0;}
-  if (ch >= ua) {return (ch - ua + 12);}
-  if (ch > ni) {return 0;}
-  if (ch >= dt) {return (ch - dt);}
-  return 0;
-}
-
 const /** !Array<number> */ des_key_shifts = [
   1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1
 ];
 
-const /** !Array<!Array<number>> */ m_sbox = new Array(4);
-const /** !Array<!Array<number>> */ fp_maskl = new Array(8);
-const /** !Array<!Array<number>> */ fp_maskr = new Array(8);
-const /** !Array<!Array<number>> */ psbox = new Array(4);
 const /** !Array<!Array<number>> */ key_perm_maskl = new Array(8);
 const /** !Array<!Array<number>> */ key_perm_maskr = new Array(8);
 const /** !Array<!Array<number>> */ comp_maskl = new Array(8);
@@ -171,7 +154,7 @@ function des_setkey(key) {
   /* Rotate subkeys and do compression permutation. */
   let shifts = 0;
   for (let round = 0; round < 16; round++) {
-    var t0, t1;
+    let t0, t1;
 
     shifts += des_key_shifts[round];
 
@@ -196,94 +179,6 @@ function des_setkey(key) {
         | comp_maskr[6][(t1 >>> 7) & 0x7f]
         | comp_maskr[7][t1 & 0x7f];
   }
-}
-
-let saltbits;
-
-function des_setup_salt(salt) {
-  saltbits = 0;
-  let saltbit = 1;
-  let obit = 0x800000;
-  for (let i = 0; i < 24; i++) {
-    if (salt & saltbit) {
-      saltbits |= obit;
-    }
-    saltbit <<= 1;
-    obit >>= 1;
-  }
-}
-
-let des_r0, des_r1;
-
-/** - */
-function des_do_des() {
-  let l, r, f, r48l, r48r;
-  let count = 25;
-
-  /* Don't bother with initial permutation. */
-  l = r = 0;
-
-  while (count--) {
-    /* Do each round. */
-    let kl = 0;
-    let kr = 0;
-    let round = 16;
-    while (round--) {
-      /* Expand R to 48 bits (simulate the E-box). */
-      r48l = ((r & 0x00000001) << 23)
-          | ((r & 0xf8000000) >>> 9)
-          | ((r & 0x1f800000) >>> 11)
-          | ((r & 0x01f80000) >>> 13)
-          | ((r & 0x001f8000) >>> 15);
-
-      r48r = ((r & 0x0001f800) << 7)
-          | ((r & 0x00001f80) << 5)
-          | ((r & 0x000001f8) << 3)
-          | ((r & 0x0000001f) << 1)
-          | ((r & 0x80000000) >>> 31);
-      /*
-       * Do salting for crypt() and friends, and
-       * XOR with the permuted key.
-       */
-      f = (r48l ^ r48r) & saltbits;
-      r48l ^= f ^ en_keysl[kl++];
-      r48r ^= f ^ en_keysr[kr++];
-      /*
-       * Do sbox lookups (which shrink it back to 32 bits)
-       * and do the pbox permutation at the same time.
-       */
-      f = psbox[0][m_sbox[0][r48l >> 12]]
-          | psbox[1][m_sbox[1][r48l & 0xfff]]
-          | psbox[2][m_sbox[2][r48r >> 12]]
-          | psbox[3][m_sbox[3][r48r & 0xfff]];
-      /*
-       * Now that we've permuted things, complete f().
-       */
-      f ^= l;
-      l = r;
-      r = f;
-    }
-    r = l;
-    l = f;
-  }
-
-  /* Final permutation (inverse of IP). */
-  des_r0 = fp_maskl[0][l >>> 24]
-      | fp_maskl[1][(l >>> 16) & 0xff]
-      | fp_maskl[2][(l >>> 8) & 0xff]
-      | fp_maskl[3][l & 0xff]
-      | fp_maskl[4][r >>> 24]
-      | fp_maskl[5][(r >>> 16) & 0xff]
-      | fp_maskl[6][(r >>> 8) & 0xff]
-      | fp_maskl[7][r & 0xff];
-  des_r1 = fp_maskr[0][l >>> 24]
-      | fp_maskr[1][(l >>> 16) & 0xff]
-      | fp_maskr[2][(l >>> 8) & 0xff]
-      | fp_maskr[3][l & 0xff]
-      | fp_maskr[4][r >>> 24]
-      | fp_maskr[5][(r >>> 16) & 0xff]
-      | fp_maskr[6][(r >>> 8) & 0xff]
-      | fp_maskr[7][r & 0xff];
 }
 
 const chrsz = 8;
@@ -432,7 +327,7 @@ function binl2str(bin) {
   return str;
 }
 
-var guid = (function() {
+const guid = (function() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
@@ -443,6 +338,48 @@ var guid = (function() {
   };
 })();
 
+function constructMetaData(accessId, postPolicy, signature) {
+  const metadata = {
+    "key": "upload/" + guid() + "/somefile.jar",
+    "acl": "private",
+    "Content-Type": "application/octet-stream",
+    "AWSAccessKeyId": accessId,
+    "policy": postPolicy,
+    "signature": signature,
+    "x-amz-meta-mailaddress": email,
+    "x-amz-meta-scanlabel": "somefile.jar;" + githubactions,
+    "x-amz-meta-password": md5crypt(password, randomize_md5_salt()),
+    "success_action_redirect": "https://www.sonatype.com/nvs-cloud-thank-you"
+  };
+
+  let data = "";
+  for (let i in metadata) {
+    if ({}.hasOwnProperty.call(metadata, i)) {
+      data += "--" + boundary + "\r\n";
+      data += "Content-Disposition: form-data; name=\"" + i + "\"; \r\n\r\n" + metadata[i] + "\r\n";
+    }
+  }
+
+  return data;
+}
+
+function constructFileContentPart() {
+  let data = "--" + boundary + "\r\n";
+  data += "Content-Disposition: form-data; name=\"file\"; filename=\"" + filePath + "\"\r\n";
+  data += "Content-Type:application/octet-stream\r\n\r\n";
+  return data;
+}
+
+function constructBodyForPostRequest(fileContent, accessId, postPolicy, signature) {
+  const data = constructMetaData(accessId, postPolicy, signature) + constructFileContentPart();
+
+  return  Buffer.concat([
+    Buffer.from(data, "utf8"),
+    Buffer.from(fileContent, "binary"),
+    Buffer.from("\r\n--" + boundary + "--\r\n", "utf8")
+  ]);
+}
+
 function uploadFileToS3(accessId, postPolicy, signature) {
   fs.readFile(filePath, (err, content) => {
     if (err) {
@@ -450,35 +387,7 @@ function uploadFileToS3(accessId, postPolicy, signature) {
       return;
     }
 
-    const metadata = {
-      "key": "upload/" + guid() + "/somefile.jar",
-      "acl": "private",
-      "Content-Type": "application/octet-stream",
-      "AWSAccessKeyId": accessId,
-      "policy": postPolicy,
-      "signature": signature,
-      "x-amz-meta-mailaddress": email,
-      "x-amz-meta-scanlabel": "somefile.jar;" + githubactions,
-      "x-amz-meta-password": md5crypt(password, randomize_md5_salt()),
-      "success_action_redirect": "https://www.sonatype.com/nvs-cloud-thank-you"
-    };
-
-    const boundary = "xxxxxxxxxx";
-    let data = "";
-    for (let i in metadata) {
-      if ({}.hasOwnProperty.call(metadata, i)) {
-        data += "--" + boundary + "\r\n";
-        data += "Content-Disposition: form-data; name=\"" + i + "\"; \r\n\r\n" + metadata[i] + "\r\n";
-      }
-    }
-    data += "--" + boundary + "\r\n";
-    data += "Content-Disposition: form-data; name=\"file\"; filename=\"" + filePath + "\"\r\n";
-    data += "Content-Type:application/octet-stream\r\n\r\n";
-    const payload = Buffer.concat([
-      Buffer.from(data, "utf8"),
-      Buffer.from(content, "binary"),
-      Buffer.from("\r\n--" + boundary + "--\r\n", "utf8")
-    ]);
+    const payload = constructBodyForPostRequest(content, accessId, postPolicy, signature);
 
     const options = {
       method: 'POST',
