@@ -130,12 +130,9 @@ export default class FileUploadService {
     };
     
     let data = "";
-    for (let i in metadata) {
-      if ({}.hasOwnProperty.call(metadata, i)) {
-        data += "--" + FileUploadService.FORM_PARAM_BOUNDARY + "\r\n";
-        // @ts-ignore
-        data += "Content-Disposition: form-data; name=\"" + i + "\"; \r\n\r\n" + metadata[i] + "\r\n";
-      }
+    for (let [key, value] of Object.entries(metadata)) {
+      data += `--${FileUploadService.FORM_PARAM_BOUNDARY}\r\n`;
+      data += `Content-Disposition: form-data; name="${key}"; \r\n\r\n${value}\r\n`;
     }
     
     return data;
@@ -143,7 +140,7 @@ export default class FileUploadService {
   
   private constructFileContentPart() {
     let data = `--${FileUploadService.FORM_PARAM_BOUNDARY}\r\n`;
-    data += "Content-Disposition: form-data; name=\"file\"; filename=\"" + this.filePath + "\"\r\n";
+    data += `Content-Disposition: form-data; name="file"; filename="${this.filePath}"\r\n`;
     data += "Content-Type:application/octet-stream\r\n\r\n";
     return data;
   }
