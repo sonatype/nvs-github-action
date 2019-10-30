@@ -1,6 +1,5 @@
 
 import * as fs from 'fs';
-import path from 'path';
 import Archiver = require('archiver');
 
 export class ArchiveUtils {
@@ -20,7 +19,7 @@ export class ArchiveUtils {
 
       archive.pipe(zipOut);
       for (const file of files) {
-        archive.append(fs.createReadStream(file), {name: path.basename(file)});
+        archive.append(fs.createReadStream(file), {name: file});
       }
 
       archive.on('error', function(err) {
