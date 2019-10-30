@@ -66,11 +66,14 @@ export default class FileUploadService {
       console.log("================= Going to upload a file ==============");
       
       if (err) {
+        console.log("================= Error happened ==============");
         console.error();
         return;
       }
       
       const payload = this.constructBodyForPostRequest(content, accessId, postPolicy, signature);
+  
+      console.log("================= After body construction ==============");
       
       const options = {
         method: 'POST',
