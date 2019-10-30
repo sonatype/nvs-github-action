@@ -1,0 +1,16 @@
+name: 'nvs-github-actions'
+description: 'NVS Scanner for GitHub Action'
+author: 'Sonatype'
+inputs:
+  email:
+    description: 'Email Address'
+    required: true
+  password:
+    description: 'Create and remember this password to access your results later!'
+    required: true
+  directory:
+    description: 'A directory in the workspace to scan'
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/main.js'

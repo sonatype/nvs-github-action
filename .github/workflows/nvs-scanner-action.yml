@@ -1,0 +1,22 @@
+name: "NVS Scanner for GitHub Action"
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - 'releases/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - run: npm ci
+    - run: npm run build
+    - run: npm test
+    - uses: ./
+      with:
+        email: test@sonatype.com
+        password: admin123
+        directory: lib
