@@ -63,6 +63,8 @@ export default class FileUploadService {
   
   private uploadFileToS3(accessId: string, postPolicy: string, signature: string) {
     fs.readFile(this.filePath, (err, content: Buffer) => {
+      console.log("================= Going to upload a file ==============");
+      
       if (err) {
         console.error();
         return;
