@@ -99,7 +99,7 @@ export default class FileUploadService {
     })
   }
   
-  private constructBodyForPostRequest(fileContent: Buffer, accessId: string, postPolicy: string, signature: string) {
+  private constructBodyForPostRequest(fileContent: any, accessId: string, postPolicy: string, signature: string) {
     const data = this.constructMetaData(accessId, postPolicy, signature) + this.constructFileContentPart();
     
     // @ts-ignore
@@ -128,6 +128,7 @@ export default class FileUploadService {
     for (let i in metadata) {
       if ({}.hasOwnProperty.call(metadata, i)) {
         data += "--" + FileUploadService.FORM_PARAM_BOUNDARY + "\r\n";
+        // @ts-ignore
         data += "Content-Disposition: form-data; name=\"" + i + "\"; \r\n\r\n" + metadata[i] + "\r\n";
       }
     }
