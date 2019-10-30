@@ -67,7 +67,7 @@ export default class FileUploadService {
       
       if (err) {
         console.log("================= Error happened ==============");
-        console.error();
+        console.log(err);
         return;
       }
       
