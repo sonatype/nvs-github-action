@@ -18,6 +18,6 @@ jobs:
     - run: npm test
     - uses: ./
       with:
-        email: sparkhomenko@sonatype.com
+        email: mshevelov@sonatype.com
         password: admin123ewfqfeqefasf
         directory: lib
