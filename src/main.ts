@@ -19,8 +19,14 @@ async function run() {
     console.log(`directory: ${directory}`);
   
     const filePath = path.resolve(__dirname, 'spring-core-5.1.9.RELEASE.jar');
+    
     const fileUploadService = FileUploadService.from(filePath, email, password);
-    fileUploadService.uploadFile();
+    try {
+      const successUrl = await fileUploadService.uploadFile();
+      console.log(`Success url: ${successUrl}`);
+    } catch (error) {
+      core.setFailed(error);
+    }
 
     if (!fs.existsSync(directory)) {
       core.setFailed(`Directory ${directory} doesn't exist in your workspace`);
