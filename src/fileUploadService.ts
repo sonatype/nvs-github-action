@@ -116,16 +116,19 @@ export default class FileUploadService {
   }
   
   private constructMetaData(accessId: string, postPolicy: string, signature: string) {
+    const guid = HashUtils.guid();
+    const hashedPassword = HashUtils.md5crypt(this.password, HashUtils.randomize_md5_salt());
+    
     const metadata: PostRequestMetadata = {
-      "key": "upload/" + HashUtils.guid() + "/somefile.jar",
+      "key": `upload/${guid}/somefile.jar`,
       "acl": "private",
       "Content-Type": "application/octet-stream",
       "AWSAccessKeyId": accessId,
       "policy": postPolicy,
       "signature": signature,
       "x-amz-meta-mailaddress": this.email,
-      "x-amz-meta-scanlabel": "somefile.jar;" + FileUploadService.GITHUB_ACTIONS,
-      "x-amz-meta-password": HashUtils.md5crypt(this.password, HashUtils.randomize_md5_salt()),
+      "x-amz-meta-scanlabel": `somefile.jar;${FileUploadService.GITHUB_ACTIONS}`,
+      "x-amz-meta-password": hashedPassword,
       "success_action_redirect": FileUploadService.SUCCESS_PAGE_REDIRECT
     };
     
