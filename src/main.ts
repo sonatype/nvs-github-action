@@ -8,7 +8,6 @@ import * as core from '@actions/core';
 import fs from 'fs';
 
 async function run() {
-
   try {
     const email = core.getInput('email');
     const password = core.getInput('password');
