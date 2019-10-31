@@ -5,7 +5,6 @@
  */
 
 import * as core from '@actions/core';
-import * as path from "path";
 import FileUploadService from "./fileUploadService";
 import {findFiles} from "./scanPattern";
 import {ArchiveUtils} from "./ArchiveUtils";
@@ -20,10 +19,13 @@ async function run() {
     console.log(`directory: ${directory}`);
 
     const matchedFiles = await findFiles(directory);
+    console.log(`found ${matchedFiles.length} files to scan`);
+    console.log(`archiving files...`);
     const archiveFilePath = await ArchiveUtils.zipFiles(matchedFiles);
 
     const fileUploadService = FileUploadService.from(archiveFilePath, email, password);
     try {
+      console.log(`upload zip file to NVS...`);
       const successUrl = await fileUploadService.uploadFile();
       console.log(`Success url: ${successUrl}`);
     } catch (error) {
