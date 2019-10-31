@@ -22,11 +22,11 @@ export class ArchiveUtils {
         archive.append(fs.createReadStream(file), {name: file});
       }
 
-      archive.on('error', function(err) {
+      archive.on('error', (err) => {
         reject(err);
       });
 
-      zipOut.on('close', function() {
+      zipOut.on('close', () => {
         console.log(`${zipFile} has been created with ${archive.pointer()} total bytes`);
         resolve(zipFile);
       });
