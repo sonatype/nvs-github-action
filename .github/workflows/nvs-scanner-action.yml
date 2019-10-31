@@ -18,6 +18,6 @@ jobs:
     - run: npm test
     - uses: ./
       with:
-        email: test@sonatype.com
-        password: admin123
+        email: your_email@something.com
+        password: ${{ secrets.NVS_SCANNER_PASSWORD }}
         directory: lib

@@ -6,6 +6,8 @@
 
 import * as core from '@actions/core';
 import fs from 'fs';
+import * as path from "path";
+import FileUploadService from "./fileUploadService";
 
 async function run() {
   try {
@@ -15,6 +17,16 @@ async function run() {
     console.log(`email: ${email}`);
     console.log('password: ******');
     console.log(`directory: ${directory}`);
+  
+    const filePath = path.resolve(__dirname, 'somefile.zip');
+    
+    const fileUploadService = FileUploadService.from(filePath, email, password);
+    try {
+      const successUrl = await fileUploadService.uploadFile();
+      console.log(`Success url: ${successUrl}`);
+    } catch (error) {
+      core.setFailed(error);
+    }
 
     if (!fs.existsSync(directory)) {
       core.setFailed(`Directory ${directory} doesn't exist in your workspace`);
