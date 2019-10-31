@@ -5,7 +5,6 @@
  */
 
 import * as core from '@actions/core';
-import fs from 'fs';
 import * as path from "path";
 import FileUploadService from "./fileUploadService";
 import {findFiles} from "./scanPattern";
@@ -19,6 +18,11 @@ async function run() {
     console.log('password: ******');
     console.log(`directory: ${directory}`);
 
+    findFiles(directory, matchedFiles => {
+      console.log(`Found ${matchedFiles.length} files`);
+      matchedFiles.forEach(file => console.log(file));
+      // TODO Zip files under the INTC-109
+    });
     const filePath = path.resolve(__dirname, 'somefile.zip');
 
     const fileUploadService = FileUploadService.from(filePath, email, password);
@@ -28,12 +32,6 @@ async function run() {
     } catch (error) {
       core.setFailed(error);
     }
-
-    findFiles(directory, matchedFiles => {
-      console.log(`Found ${matchedFiles.length} files`);
-      matchedFiles.forEach(file => console.log(file));
-      // TODO Zip files under the INTC-109
-    });
   }
   catch (error) {
     core.setFailed(error.message);
