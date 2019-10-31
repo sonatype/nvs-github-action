@@ -8,6 +8,7 @@ import * as core from '@actions/core';
 import * as path from "path";
 import FileUploadService from "./fileUploadService";
 import {findFiles} from "./scanPattern";
+import {ArchiveUtils} from "./ArchiveUtils";
 
 async function run() {
   try {
@@ -18,9 +19,10 @@ async function run() {
     console.log('password: ******');
     console.log(`directory: ${directory}`);
 
-    const filePath = path.resolve(__dirname, 'somefile.zip');
+    const matchedFiles = await findFiles(directory);
+    const archiveFilePath = await ArchiveUtils.zipFiles(matchedFiles);
 
-    const fileUploadService = FileUploadService.from(filePath, email, password);
+    const fileUploadService = FileUploadService.from(archiveFilePath, email, password);
     try {
       const successUrl = await fileUploadService.uploadFile();
       console.log(`Success url: ${successUrl}`);

@@ -21,11 +21,11 @@ const NvsPattern =
  * @return a list of matched files.
  */
 export function findFiles(directory: string): Promise<Array<string>> {
-  if (!fs.existsSync(directory)) {
-    throw Error(`Directory ${directory} doesn't exist in your workspace`);
-  }
+  return new Promise((resolve, reject) => {
+    if (!fs.existsSync(directory)) {
+      reject(new Error(`Directory ${directory} doesn't exist in your workspace`));
+    }
 
-  return new Promise(resolve => {
     glob(NvsPattern, {nodir: true, absolute: true, cwd: directory}, function(er, files) {
       if (files.length === 0) {
         throw Error('No files to scan');
