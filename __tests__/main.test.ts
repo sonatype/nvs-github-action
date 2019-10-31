@@ -120,21 +120,3 @@ describe('test search patterns', () => {
   });
 
 });
-
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test GitHub Actions', () => {
-  process.env['INPUT_EMAIL'] = 'test@test.com';
-  process.env['INPUT_PASSWORD'] = 'admin123';
-  process.env['INPUT_DIRECTORY'] = directory;
-
-  const javaPath = path.join(directory, 'java');
-  fs.mkdirSync(javaPath);
-  fs.open(`${javaPath}/some.jar`, 'w', function() {});
-
-  const ip = path.join(__dirname, '..', 'lib', 'main.js');
-  const options: cp.ExecSyncOptions = {
-    env: process.env
-  };
-  console.log(cp.execSync(`node ${ip}`, options).toString());
-  rimraf.sync(javaPath);
-});
