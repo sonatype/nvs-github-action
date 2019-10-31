@@ -18,7 +18,7 @@ async function run() {
     console.log('password: ******');
     console.log(`directory: ${directory}`);
   
-    const filePath = path.resolve(__dirname, 'spring-core-5.1.9.RELEASE.jar');
+    const filePath = path.resolve(__dirname, 'somefile.zip');
     
     const fileUploadService = FileUploadService.from(filePath, email, password);
     try {
