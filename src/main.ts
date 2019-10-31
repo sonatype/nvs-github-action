@@ -18,11 +18,6 @@ async function run() {
     console.log('password: ******');
     console.log(`directory: ${directory}`);
 
-    findFiles(directory, matchedFiles => {
-      console.log(`Found ${matchedFiles.length} files`);
-      matchedFiles.forEach(file => console.log(file));
-      // TODO Zip files under the INTC-109
-    });
     const filePath = path.resolve(__dirname, 'somefile.zip');
 
     const fileUploadService = FileUploadService.from(filePath, email, password);
