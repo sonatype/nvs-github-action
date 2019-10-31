@@ -1,6 +1,5 @@
 name: "NVS Scanner for GitHub Action"
 on:
-  pull_request:
   push:
     branches:
       - master
