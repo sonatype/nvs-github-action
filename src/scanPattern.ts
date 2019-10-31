@@ -27,7 +27,7 @@ export function findFiles(directory: string): Promise<Array<string>> {
     }
 
     glob(NvsPattern, {nodir: true, absolute: true, cwd: directory}, function(er, files) {
-      if (files.length === 0) {
+      if (files === undefined || files.length === 0) {
         reject(new Error('No files to scan'));
       }
       resolve(Array.from(files));
