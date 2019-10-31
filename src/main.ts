@@ -5,7 +5,7 @@
  */
 
 import * as core from '@actions/core';
-import fs from 'fs';
+import {findFiles} from "./scanPattern";
 
 async function run() {
   try {
@@ -16,9 +16,11 @@ async function run() {
     console.log('password: ******');
     console.log(`directory: ${directory}`);
 
-    if (!fs.existsSync(directory)) {
-      core.setFailed(`Directory ${directory} doesn't exist in your workspace`);
-    }
+    findFiles(directory, matchedFiles => {
+      console.log(`Found ${matchedFiles.length} files`);
+      matchedFiles.forEach(file => console.log(file));
+      // TODO Zip files under the INTC-109
+    });
   }
   catch (error) {
     core.setFailed(error.message);
