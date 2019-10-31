@@ -30,7 +30,9 @@ export function findFiles(directory: string): Promise<Array<string>> {
       if (files === undefined || files.length === 0) {
         reject(new Error('No files to scan'));
       }
-      resolve(Array.from(files));
+      else {
+        resolve(Array.from(files));
+      }
     });
   });
 }
