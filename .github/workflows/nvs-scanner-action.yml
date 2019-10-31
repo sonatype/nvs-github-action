@@ -20,4 +20,4 @@ jobs:
       with:
         email: your_email@something.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
-        directory: /
+        directory: lib
