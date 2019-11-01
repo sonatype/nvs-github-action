@@ -23,13 +23,9 @@ export default class HashUtils {
   static md5crypt(password: string, salt: string) {
     let ctx = password + '$apr1$' + salt;
     let ctx1 = HashUtils.str_md5(password + salt + password);
-    
-    /* "Just as many characters of ctx1" (as there are in the password) */
     for (let pl = password.length; pl > 0; pl -= 16) {
       ctx += ctx1.slice(0, (pl > 16) ? 16 : pl);
     }
-    
-    /* "Then something really weird" */
     for (let i = password.length; i !== 0; i >>= 1) {
       if (i & 1) {
         ctx += '\0';
@@ -40,8 +36,6 @@ export default class HashUtils {
     }
     
     ctx = HashUtils.str_md5(ctx);
-    
-    /* "Just to make sure things don't run too fast" */
     for (let i = 0; i < 1000; i++) {
       ctx1 = '';
       if (i & 1) {
@@ -140,7 +134,6 @@ export default class HashUtils {
   }
   
   private static core_md5(x: number[], len: number) {
-    /* append padding */
     x[len >> 5] |= 0x80 << ((len) % 32);
     x[(((len + 64) >>> 9) << 4) + 14] = len;
     
