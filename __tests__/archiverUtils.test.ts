@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as rimraf from "rimraf";
 import * as path from "path";
-import {findFiles} from "../src/scanPattern";
 import {ArchiveUtils} from "../src/ArchiveUtils";
 
 const directory = path.join(__dirname, 'workspace');
