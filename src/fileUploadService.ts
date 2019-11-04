@@ -16,8 +16,8 @@ type PostRequestMetadata = { [key in PostRequestMetadataKeys]: string }
 
 export default class FileUploadService {
   
-  private static readonly S3_POST_POLICY = "http://production-sonatype-nvs-cloud-scanner-post-policy.s3-website-us-east-1.amazonaws.com/post-policy-signed.json";
-  private static readonly S3_HOSTNAME = "production-sonatype-nvs-cloud-scanner-file-storage.s3.amazonaws.com";
+  private static readonly S3_POST_POLICY = "http://development-sonatype-nvs-cloud-scanner-post-policy.s3-website-us-east-1.amazonaws.com/post-policy-signed.json";
+  private static readonly S3_HOSTNAME = "development-sonatype-nvs-cloud-scanner-file-storage.s3.amazonaws.com";
   private static readonly S3_PATH = "/";
   private static readonly SUCCESS_PAGE_REDIRECT = "https://www.sonatype.com/nvs-cloud-thank-you";
   
