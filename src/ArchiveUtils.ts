@@ -9,6 +9,7 @@ export class ArchiveUtils {
 
       if (files === undefined || files.length === 0) {
         reject(new Error('no files to zip'));
+        return;
       }
 
       const zipFile = __dirname + '/dataToScan.zip';
@@ -24,11 +25,12 @@ export class ArchiveUtils {
 
       archive.on('error', (err) => {
         reject(err);
+        return;
       });
 
       zipOut.on('close', () => {
-        console.log(`${zipFile} has been created with ${archive.pointer()} total bytes`);
         resolve(zipFile);
+        return;
       });
 
       archive.finalize();
