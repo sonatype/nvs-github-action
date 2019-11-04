@@ -1,7 +1,28 @@
 /*
  * Copyright (c) 2019-present Sonatype, Inc. All rights reserved.
  * Includes the third-party code listed at http://links.sonatype.com/products/nexus/attributions.
- * "Sonatype" is a trademark of Sonatype, Inc.
+ * "Sonatype" is a trademark of Sonatype, Inc. All other trademarks are the property of their respective owners.
+ *
+ * Java Port By: Jonathan Abbey, jonabbey@arlut.utexas.edu
+ * Original C Version:
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <phk@login.dknet.dk> wrote this file.  As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
+ * ----------------------------------------------------------------------------
+ * This Java Port is
+ * Copyright (c) 1999-2008 The University of Texas at Austin.
+ * All rights reserved.
+ * Redistribution and use in source and binary form are permitted
+ * provided that distributions retain this entire copyright notice
+ * and comment. Neither the name of the University nor the names of
+ * its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written
+ * permission. THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE.
  */
 
 export default class HashUtils {
