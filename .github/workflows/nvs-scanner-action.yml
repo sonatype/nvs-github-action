@@ -17,6 +17,6 @@ jobs:
     - run: npm test
     - uses: ./
       with:
-        email: mshevelov@sonatype.com
+        email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
         directory: lib
