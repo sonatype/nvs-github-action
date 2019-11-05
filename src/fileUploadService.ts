@@ -24,6 +24,7 @@ export default class FileUploadService {
   private static readonly FORM_PARAM_BOUNDARY = "34a15cb8-1e8e-47f1-a71c-76fe5ff7c3e7";
   
   private static readonly GITHUB_ACTIONS = "github-actions";
+  private static readonly ZIP_FILE_NAME = "dataToScan.zip";
   
   private readonly filePath: string;
   private readonly email: string;
@@ -120,14 +121,14 @@ export default class FileUploadService {
     const hashedPassword = HashUtils.md5crypt(this.password, HashUtils.randomize_md5_salt());
     
     const metadata: PostRequestMetadata = {
-      "key": `upload/${guid}/somefile.jar`,
+      "key": `upload/${guid}/${FileUploadService.ZIP_FILE_NAME}`,
       "acl": "private",
       "Content-Type": "application/octet-stream",
       "AWSAccessKeyId": accessId,
       "policy": postPolicy,
       "signature": signature,
       "x-amz-meta-mailaddress": this.email,
-      "x-amz-meta-scanlabel": `somefile.jar;${FileUploadService.GITHUB_ACTIONS}`,
+      "x-amz-meta-scanlabel": `${FileUploadService.ZIP_FILE_NAME};${FileUploadService.GITHUB_ACTIONS}`,
       "x-amz-meta-password": hashedPassword,
       "success_action_redirect": FileUploadService.SUCCESS_PAGE_REDIRECT
     };
