@@ -1,8 +1,12 @@
 name: "NVS Scanner for GitHub Action"
 on:
+  pull_request:
+    branches:
+      - '*'
   push:
     branches:
       - master
+      - develop
       - 'releases/*'
       - 'intc-*'
 
@@ -13,6 +17,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - run: npm ci
+    - run: npm run lint
     - run: npm run build
     - run: npm test
     - uses: ./

@@ -5,30 +5,39 @@
  */
 
 import * as core from '@actions/core';
-import FileUploadService from "./fileUploadService";
-import {findFiles} from "./scanPattern";
-import {ArchiveUtils} from "./ArchiveUtils";
+import FileUploadService from './fileUploadService';
+import {findFiles} from './scanPattern';
+import {ArchiveUtils} from './ArchiveUtils';
+import * as EmailValidator from 'email-validator';
+import LoggingUtils from './loggingUtils';
 
 async function run() {
   try {
     const email = core.getInput('email');
+    if (!EmailValidator.validate(email)) {
+      core.setFailed(`${email} email is not valid`);
+    }
     const password = core.getInput('password');
     const directory = core.getInput('directory');
-    console.log(`email: ${email}`);
-    console.log('password: ******');
-    console.log(`directory: ${directory}`);
+
+    LoggingUtils.logSeparator();
+    LoggingUtils.logInputField('email', email);
+    LoggingUtils.logInputField('password', '******');
+    LoggingUtils.logInputField('directory', directory);
+    LoggingUtils.logSeparator();
 
     const matchedFiles = await findFiles(directory);
-    console.log(`found ${matchedFiles.length} files to scan`);
-    console.log(`archiving files...`);
+    LoggingUtils.logMessage(`found ${matchedFiles.length} files to scan`);
+    LoggingUtils.logMessage('archiving files...');
     const archiveFilePath = await ArchiveUtils.zipFiles(matchedFiles);
 
     const fileUploadService = FileUploadService.from(archiveFilePath, email, password);
     try {
-      console.log(`upload zip file to NVS...`);
+      LoggingUtils.logMessage('upload zip file to NVS...');
       const successUrl = await fileUploadService.uploadFile();
-      console.log(`Success url: ${successUrl}`);
-    } catch (error) {
+      LoggingUtils.logMessage(`Success url: ${successUrl}`);
+    }
+    catch (error) {
       core.setFailed(error);
     }
   }
