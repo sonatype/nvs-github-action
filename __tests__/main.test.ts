@@ -4,10 +4,10 @@
  * "Sonatype" is a trademark of Sonatype, Inc.
  */
 
-import * as path from 'path'
+import * as path from 'path';
 import * as fs from 'fs';
 import * as rimraf from 'rimraf';
-import {findFiles} from "../src/scanPattern";
+import {findFiles} from '../src/scanPattern';
 
 const directory = path.join(__dirname, 'workspace');
 
@@ -26,8 +26,8 @@ describe('test search patterns', () => {
   test('test Java pattern', async () => {
     const javaPath = path.join(directory, 'java');
     fs.mkdirSync(javaPath);
-    fs.open(`${javaPath}/test.jar`, 'w', function() {});
-    fs.open(`${javaPath}/server.war`, 'w', function() {});
+    fs.open(`${javaPath}/test.jar`, 'w', () => void 0);
+    fs.open(`${javaPath}/server.war`, 'w', () => void 0);
 
     const matchedFiles = await findFiles(directory);
     expect(matchedFiles.length).toBe(2);
@@ -41,8 +41,8 @@ describe('test search patterns', () => {
   test('test Java Script pattern', async () => {
     const jsPath = path.join(directory, 'js', 'node_modules');
     fs.mkdirSync(jsPath, {recursive: true});
-    fs.open(`${jsPath}/someLib.js`, 'w', function() {});
-    fs.open(`${jsPath}/devLib.js`, 'w', function() {});
+    fs.open(`${jsPath}/someLib.js`, 'w', () => void 0);
+    fs.open(`${jsPath}/devLib.js`, 'w', () => void 0);
 
     const matchedFiles = await findFiles(directory);
     expect(matchedFiles.length).toBe(2);
@@ -56,7 +56,7 @@ describe('test search patterns', () => {
   test('test GO pattern', async () => {
     const goPath = path.join(directory, 'go');
     fs.mkdirSync(goPath);
-    fs.open(`${goPath}/go.sum`, 'w', function() {});
+    fs.open(`${goPath}/go.sum`, 'w', () => void 0);
 
     const matchedFiles = await findFiles(directory);
     expect(matchedFiles.length).toBe(1);
@@ -70,7 +70,7 @@ describe('test search patterns', () => {
   test('test Python pattern', async () => {
     const pythonPath = path.join(directory, 'python');
     fs.mkdirSync(pythonPath);
-    fs.open(`${pythonPath}/requirements.txt`, 'w', function() {});
+    fs.open(`${pythonPath}/requirements.txt`, 'w', () => void 0);
 
     const matchedFiles = await findFiles(directory);
     expect(matchedFiles.length).toBe(1);
@@ -86,11 +86,11 @@ describe('test search patterns', () => {
     fs.mkdirSync(rubyPath, {recursive: true});
     const vendorDir = path.join(rubyPath, 'vendor_1');
     fs.mkdirSync(vendorDir);
-    fs.open(`${vendorDir}/someLib.rb`, 'w', function() {});
+    fs.open(`${vendorDir}/someLib.rb`, 'w', () => void 0);
 
     const vendorDir2 = path.join(rubyPath, 'vendor_2');
     fs.mkdirSync(vendorDir2);
-    fs.open(`${vendorDir2}/someLib2.rb`, 'w', function() {});
+    fs.open(`${vendorDir2}/someLib2.rb`, 'w', () => void 0);
 
     const matchedFiles = await findFiles(directory);
     expect(matchedFiles.length).toBe(2);
@@ -104,9 +104,9 @@ describe('test search patterns', () => {
   test('test .NET pattern', async () => {
     const netPath = path.join(directory, 'net', 'packages');
     fs.mkdirSync(netPath, {recursive: true});
-    fs.open(`${netPath}/someLib.Library`, 'w', function() {});
-    fs.open(`${netPath}/devLib.Library`, 'w', function() {});
-    fs.open(`${netPath}/file.Xdt`, 'w', function() {});
+    fs.open(`${netPath}/someLib.Library`, 'w', () => void 0);
+    fs.open(`${netPath}/devLib.Library`, 'w', () => void 0);
+    fs.open(`${netPath}/file.Xdt`, 'w', () => void 0);
 
     const matchedFiles = await findFiles(directory);
     expect(matchedFiles.length).toBe(3);

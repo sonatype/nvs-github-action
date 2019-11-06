@@ -4,10 +4,10 @@
  * "Sonatype" is a trademark of Sonatype, Inc.
  */
 
-import * as fs from "fs";
-import * as rimraf from "rimraf";
-import * as path from "path";
-import {ArchiveUtils} from "../src/ArchiveUtils";
+import * as fs from 'fs';
+import * as rimraf from 'rimraf';
+import * as path from 'path';
+import {ArchiveUtils} from '../src/ArchiveUtils';
 
 const directory = path.join(__dirname, 'workspace');
 
@@ -26,8 +26,8 @@ describe('Archiver Utils tests', () => {
   test('zip file should be created', async () => {
     const javaPath = path.join(directory, 'java');
     fs.mkdirSync(javaPath);
-    fs.open(`${javaPath}/test.jar`, 'w', function() {});
-    fs.open(`${javaPath}/server.war`, 'w', function() {});
+    fs.open(`${javaPath}/test.jar`, 'w', () => void 0);
+    fs.open(`${javaPath}/server.war`, 'w', () => void 0);
     const files: Array<string> = [`${javaPath}/test.jar`, `${javaPath}/server.war`];
 
     const zipFileName = await ArchiveUtils.zipFiles(files);
@@ -37,7 +37,7 @@ describe('Archiver Utils tests', () => {
 
   test('should fail on empty array', async () => {
     const files: Array<string> = [];
-    await expect(ArchiveUtils.zipFiles(files)).rejects.toThrow(new Error("no files to zip"));
+    await expect(ArchiveUtils.zipFiles(files)).rejects.toThrow(new Error('no files to zip'));
   });
 
 });

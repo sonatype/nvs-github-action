@@ -8,12 +8,12 @@ import glob from 'glob';
 import fs from 'fs';
 
 const NvsPattern =
-     '{**/*.war,**/*.ear,**/*.sar,**/*.jar,'  // JAVA
-   + '**/node_modules/**,'                    // JAVA_SCRIPT
-   + '**/go.sum,'                             // GO
-   + '**/requirements.txt,'                   // PYTHON
-   + '**/vendor/cache/**,'                    // RUBY
-   + '**/packages/**}';                       // DOT_NET
+     '{**/*.war,**/*.ear,**/*.sar,**/*.jar,' // JAVA
+   + '**/node_modules/**,' // JAVA_SCRIPT
+   + '**/go.sum,' // GO
+   + '**/requirements.txt,' // PYTHON
+   + '**/vendor/cache/**,' // RUBY
+   + '**/packages/**}'; // DOT_NET
 
 /**
  * A list of all matched files with their absolute paths.
