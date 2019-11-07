@@ -24,6 +24,7 @@ export function findFiles(directory: string): Promise<Array<string>> {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(directory)) {
       reject(new Error(`Directory ${directory} doesn't exist in your workspace`));
+      return;
     }
 
     glob(NvsPattern, {nodir: true, absolute: true, cwd: directory}, function(er, files) {

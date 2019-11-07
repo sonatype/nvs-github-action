@@ -69,6 +69,7 @@ export default class FileUploadService {
       fs.readFile(this.filePath, (err, content: Buffer) => {
         if (err) {
           reject(err);
+          return;
         }
 
         const payload = this.constructBodyForPostRequest(content, accessId, postPolicy, signature);
@@ -90,6 +91,7 @@ export default class FileUploadService {
           }
           else {
             reject(new Error('A request returned unexpected status code.'));
+            return;
           }
 
           res.on('data', (d) => {
