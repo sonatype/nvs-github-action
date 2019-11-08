@@ -1,6 +1,9 @@
 name: 'nvs-github-actions'
 description: 'NVS Scanner for GitHub Action'
 author: 'Sonatype'
+branding:
+  icon: 'activity'
+  color: 'blue'
 inputs:
   email:
     description: 'Email Address'
