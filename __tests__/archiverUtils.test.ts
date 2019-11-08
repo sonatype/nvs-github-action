@@ -7,7 +7,7 @@
 import * as fs from 'fs';
 import * as rimraf from 'rimraf';
 import * as path from 'path';
-import {ArchiveUtils} from '../src/ArchiveUtils';
+import {ArchiveUtils} from '../src/archiveUtils';
 
 const directory = path.join(__dirname, 'workspace');
 

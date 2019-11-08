@@ -4,8 +4,10 @@
  * "Sonatype" is a trademark of Sonatype, Inc.
  */
 
+import * as path from 'path';
 import * as fs from 'fs';
 import Archiver = require('archiver');
+import config from './config.json';
 
 export class ArchiveUtils {
 
@@ -17,7 +19,7 @@ export class ArchiveUtils {
         return;
       }
 
-      const zipFile = __dirname + '/dataToScan.zip';
+      const zipFile = path.join(__dirname, config.uploadService.zipFileName);
       const zipOut = fs.createWriteStream(zipFile);
       const archive = Archiver('zip', {
         zlib: {level: 9}

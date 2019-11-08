@@ -7,7 +7,7 @@
 import * as core from '@actions/core';
 import FileUploadService from './fileUploadService';
 import {findFiles} from './scanPattern';
-import {ArchiveUtils} from './ArchiveUtils';
+import {ArchiveUtils} from './archiveUtils';
 import * as EmailValidator from 'email-validator';
 import LoggingUtils from './loggingUtils';
 
