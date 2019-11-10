@@ -29,7 +29,7 @@ export function findFiles(directory: string): Promise<Array<string>> {
 
     glob(NvsPattern, {nodir: true, absolute: true, cwd: directory}, function(er, files) {
       if (files === undefined || files.length === 0) {
-        reject(new Error('No files to scan'));
+        reject(new Error('Could not find any application bundles or dependencies to scan. Check Example Usage in the README.'));
       }
       else {
         resolve(Array.from(files));

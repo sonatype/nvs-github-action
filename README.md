@@ -9,19 +9,19 @@ NVS for GitHub Actions generates a Software Bill of Materials during the Actions
 
 ### `email`
 
-**Required** Email used to send NVS Report after scan is complete.
+**Required** Where to send Nexus Vulnerability Scan after scan is complete.
 
 ### `password`
 
-**Required** Password to access NVS Report.
+**Required** Password to access Nexus Vulnerability Scan.
 
 ### `directory`
 
-**Required** Application directory containing the application and dependencies to scan.
+**Required** Directory containing the application and dependencies to scan.
 
 ## Example Usage
 
-The Nexus Vulnerability Scanner supports several ecosystems, including Java, Go, JavaScript, Python, Ruby, NuGet, and [more](https://www.sonatype.com/languages-packages). Dependent on the ecosystem, other workflow actions may be necessary to prepare the application for analysis.
+The Nexus Vulnerability Scanner supports several ecosystems including Java, Go, JavaScript, Python, Ruby, NuGet, and [more](https://www.sonatype.com/languages-packages). Dependent on the ecosystem, other workflow actions may be necessary to prepare the application for analysis.
 
 ### Java
 
