@@ -25,6 +25,6 @@ jobs:
         npm test
     - uses: ./
       with:
-        email: your@mail.com
-        password: ${{ secrets.NVS_SCANNER_PASSWORD }}
-        directory: lib
+        email: ${{ secrets.NVS_TEST_EMAIL }}
+        password: ${{ secrets.NVS_TEST_PASSWORD }}
+        directory: __tests__/integration-test/
