@@ -1,0 +1,30 @@
+name: "NVS Scanner for GitHub Action"
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - master
+      - develop
+      - 'releases/*'
+      - 'intc-*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - run: |
+        npm ci
+        npm run lint
+        npm run build
+        npm test
+    - uses: ./
+      with:
+        email: ${{ secrets.NVS_TEST_EMAIL }}
+        password: ${{ secrets.NVS_TEST_PASSWORD }}
+        directory: __tests__/integration-test/
