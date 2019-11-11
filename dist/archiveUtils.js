@@ -16,9 +16,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = __importStar(require("path"));
-const fs = __importStar(require("fs"));
+const fs = __importStar(require("graceful-fs"));
+const pretty_bytes_1 = __importDefault(require("pretty-bytes"));
 const Archiver = require("archiver");
 const config_json_1 = __importDefault(require("./config.json"));
+const loggingUtils_1 = __importDefault(require("./loggingUtils"));
 class ArchiveUtils {
     static async zipFiles(files) {
         return new Promise((resolve, reject) => {
@@ -33,15 +35,23 @@ class ArchiveUtils {
             });
             archive.pipe(zipOut);
             for (const file of files) {
-                archive.append(fs.createReadStream(file), { name: file });
+                archive.file(file, { name: file });
             }
             archive.on('error', (err) => {
                 reject(err);
                 return;
             });
+            archive.on('warning', (err) => {
+                reject(err);
+                return;
+            });
             zipOut.on('close', () => {
+                loggingUtils_1.default.logMessage(`Created ${zipFile} with ${pretty_bytes_1.default(archive.pointer())}`);
                 resolve(zipFile);
                 return;
+            });
+            zipOut.on('end', function () {
+                loggingUtils_1.default.logMessage('Data has been drained');
             });
             archive.finalize();
         });

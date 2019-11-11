@@ -7,9 +7,16 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = __importDefault(require("glob"));
-const fs_1 = __importDefault(require("fs"));
+const fs = __importStar(require("graceful-fs"));
 const NvsPattern = '{**/*.war,**/*.ear,**/*.sar,**/*.jar,' // JAVA
     + '**/node_modules/**,' // JAVA_SCRIPT
     + '**/go.sum,' // GO
@@ -23,7 +30,7 @@ const NvsPattern = '{**/*.war,**/*.ear,**/*.sar,**/*.jar,' // JAVA
  */
 function findFiles(directory) {
     return new Promise((resolve, reject) => {
-        if (!fs_1.default.existsSync(directory)) {
+        if (!fs.existsSync(directory)) {
             reject(new Error(`Directory ${directory} doesn't exist in your workspace`));
             return;
         }

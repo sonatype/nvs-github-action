@@ -16,7 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const http = __importStar(require("http"));
-const fs = __importStar(require("fs"));
+const fs = __importStar(require("graceful-fs"));
 const https = __importStar(require("https"));
 const hashUtils_1 = __importDefault(require("./hashUtils"));
 const config_json_1 = __importDefault(require("./config.json"));
