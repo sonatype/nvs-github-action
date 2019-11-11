@@ -17,6 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = __importStar(require("path"));
 const fs = __importStar(require("graceful-fs"));
+const pretty_bytes_1 = __importDefault(require("pretty-bytes"));
 const Archiver = require("archiver");
 const config_json_1 = __importDefault(require("./config.json"));
 const loggingUtils_1 = __importDefault(require("./loggingUtils"));
@@ -45,7 +46,7 @@ class ArchiveUtils {
                 return;
             });
             zipOut.on('close', () => {
-                loggingUtils_1.default.logMessage(archive.pointer() + ' total bytes');
+                loggingUtils_1.default.logMessage(`Created ${zipFile} with ${pretty_bytes_1.default(archive.pointer())}`);
                 resolve(zipFile);
                 return;
             });
