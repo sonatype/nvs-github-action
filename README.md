@@ -47,7 +47,7 @@ jobs:
     - name: Build with Maven
       run: mvn package dependency:copy-dependencies
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -76,7 +76,7 @@ jobs:
     - name: Build with Maven
       run: mvn package
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -101,7 +101,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -131,7 +131,7 @@ jobs:
     - name: Build with npm
       run: npm ci
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -156,7 +156,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -189,7 +189,7 @@ jobs:
         gem install bundler
         bundle install
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -220,7 +220,7 @@ jobs:
     - name: Build with dotnet
       run: dotnet build
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@master
+      uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
