@@ -36,12 +36,24 @@ export class ArchiveUtils {
         return;
       });
 
+      archive.on('warning', function(err) {
+        LoggingUtils.logError(err.message);
+        if (err.code === 'ENOENT') {
+          reject(err);
+          return;
+        }
+        else {
+          resolve(zipFile);
+          return;
+        }
+      });
+
       zipOut.on('close', () => {
+        LoggingUtils.logMessage(archive.pointer() + ' total bytes');
         resolve(zipFile);
         return;
       });
 
-      LoggingUtils.logMessage(`created ${zipFile} file`);
       archive.finalize();
     });
 

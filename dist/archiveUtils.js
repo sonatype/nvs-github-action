@@ -40,11 +40,22 @@ class ArchiveUtils {
                 reject(err);
                 return;
             });
+            archive.on('warning', function (err) {
+                loggingUtils_1.default.logError(err.message);
+                if (err.code === 'ENOENT') {
+                    reject(err);
+                    return;
+                }
+                else {
+                    resolve(zipFile);
+                    return;
+                }
+            });
             zipOut.on('close', () => {
+                loggingUtils_1.default.logMessage(archive.pointer() + ' total bytes');
                 resolve(zipFile);
                 return;
             });
-            loggingUtils_1.default.logMessage(`created ${zipFile} file`);
             archive.finalize();
         });
     }
