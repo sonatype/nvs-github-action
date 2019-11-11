@@ -6,6 +6,7 @@
 
 import * as path from 'path';
 import * as fs from 'graceful-fs';
+import prettyBytes from 'pretty-bytes';
 import Archiver = require('archiver');
 import config from './config.json';
 import LoggingUtils from './loggingUtils';
@@ -42,7 +43,7 @@ export class ArchiveUtils {
       });
 
       zipOut.on('close', () => {
-        LoggingUtils.logMessage(archive.pointer() + ' total bytes');
+        LoggingUtils.logMessage(`Created ${zipFile} with ${prettyBytes(archive.pointer())}`);
         resolve(zipFile);
         return;
       });
