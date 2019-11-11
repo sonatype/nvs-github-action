@@ -38,6 +38,7 @@ async function run() {
         loggingUtils_1.default.logMessage(`found ${matchedFiles.length} files to scan`);
         loggingUtils_1.default.logMessage('archiving files...');
         const archiveFilePath = await archiveUtils_1.ArchiveUtils.zipFiles(matchedFiles);
+        loggingUtils_1.default.logMessage(`created ${archiveFilePath} file`);
         const fileUploadService = fileUploadService_1.default.from(archiveFilePath, email, password);
         try {
             loggingUtils_1.default.logMessage('upload zip file to NVS...');
