@@ -5,7 +5,7 @@
  */
 
 import * as path from 'path';
-import * as fs from 'fs';
+import * as fs from 'graceful-fs';
 import * as rimraf from 'rimraf';
 import {findFiles} from '../src/scanPattern';
 
