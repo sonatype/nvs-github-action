@@ -1,7 +1,7 @@
 {
     "uploadService": {
-        "s3PostPolicy": "http://development-sonatype-nvs-cloud-scanner-post-policy.s3-website-us-east-1.amazonaws.com/post-policy-signed.json",
-        "s3HostName": "development-sonatype-nvs-cloud-scanner-file-storage.s3.amazonaws.com",
+        "s3PostPolicy": "http://production-sonatype-nvs-cloud-scanner-post-policy.s3-website-us-east-1.amazonaws.com/post-policy-signed.json",
+        "s3HostName": "production-sonatype-nvs-cloud-scanner-file-storage.s3.amazonaws.com",
         "successPageRedirect": "https://www.sonatype.com/nvs-cloud-thank-you",
         "zipFileName": "dataToScan.zip"
     },
