@@ -5,5 +5,5 @@
     "successPageRedirect": "https://www.sonatype.com/nvs-cloud-thank-you",
     "zipFileName": "dataToScan.zip"
   },
-  "integratorName": "github-actions"
+  "integratorName": "Sonatype-GitHub-Actions"
 }
