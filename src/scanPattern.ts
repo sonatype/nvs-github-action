@@ -5,7 +5,7 @@
  */
 
 import glob from 'glob';
-import fs from 'fs';
+import * as fs from 'graceful-fs';
 
 const NvsPattern =
      '{**/*.war,**/*.ear,**/*.sar,**/*.jar,' // JAVA

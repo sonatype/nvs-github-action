@@ -6,8 +6,10 @@
 
 import * as path from 'path';
 import * as fs from 'graceful-fs';
+import prettyBytes from 'pretty-bytes';
 import Archiver = require('archiver');
 import config from './config.json';
+import LoggingUtils from './loggingUtils';
 
 export class ArchiveUtils {
 
@@ -27,7 +29,7 @@ export class ArchiveUtils {
 
       archive.pipe(zipOut);
       for (const file of files) {
-        archive.append(fs.createReadStream(file), {name: file});
+        archive.file(file, {name: file});
       }
 
       archive.on('error', (err) => {
@@ -35,9 +37,19 @@ export class ArchiveUtils {
         return;
       });
 
+      archive.on('warning', (err) => {
+        reject(err);
+        return;
+      });
+
       zipOut.on('close', () => {
+        LoggingUtils.logMessage(`Created ${zipFile} with ${prettyBytes(archive.pointer())}`);
         resolve(zipFile);
         return;
+      });
+
+      zipOut.on('end', function() {
+        LoggingUtils.logMessage('Data has been drained');
       });
 
       archive.finalize();
