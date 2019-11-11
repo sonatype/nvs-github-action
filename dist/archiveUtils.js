@@ -19,6 +19,7 @@ const path = __importStar(require("path"));
 const fs = __importStar(require("graceful-fs"));
 const Archiver = require("archiver");
 const config_json_1 = __importDefault(require("./config.json"));
+const loggingUtils_1 = __importDefault(require("./loggingUtils"));
 class ArchiveUtils {
     static async zipFiles(files) {
         return new Promise((resolve, reject) => {
@@ -43,6 +44,7 @@ class ArchiveUtils {
                 resolve(zipFile);
                 return;
             });
+            loggingUtils_1.default.logMessage(`created ${zipFile} file`);
             archive.finalize();
         });
     }

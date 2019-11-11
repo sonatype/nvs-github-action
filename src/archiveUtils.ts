@@ -8,6 +8,7 @@ import * as path from 'path';
 import * as fs from 'graceful-fs';
 import Archiver = require('archiver');
 import config from './config.json';
+import LoggingUtils from './loggingUtils';
 
 export class ArchiveUtils {
 
@@ -40,6 +41,7 @@ export class ArchiveUtils {
         return;
       });
 
+      LoggingUtils.logMessage(`created ${zipFile} file`);
       archive.finalize();
     });
 

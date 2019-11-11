@@ -30,17 +30,11 @@ async function run() {
     LoggingUtils.logMessage(`found ${matchedFiles.length} files to scan`);
     LoggingUtils.logMessage('archiving files...');
     const archiveFilePath = await ArchiveUtils.zipFiles(matchedFiles);
-    LoggingUtils.logMessage(`created ${archiveFilePath} file`);
 
     const fileUploadService = FileUploadService.from(archiveFilePath, email, password);
-    try {
-      LoggingUtils.logMessage('upload zip file to NVS...');
-      const successUrl = await fileUploadService.uploadFile();
-      LoggingUtils.logMessage(`Success url: ${successUrl}`);
-    }
-    catch (error) {
-      core.setFailed(error);
-    }
+    LoggingUtils.logMessage('upload zip file to NVS...');
+    const successUrl = await fileUploadService.uploadFile();
+    LoggingUtils.logMessage(`Success url: ${successUrl}`);
   }
   catch (error) {
     core.setFailed(error.message);
