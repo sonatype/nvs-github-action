@@ -4,7 +4,7 @@
  * "Sonatype" is a trademark of Sonatype, Inc.
  */
 
-import * as fs from 'fs';
+import * as fs from 'graceful-fs';
 import * as rimraf from 'rimraf';
 import * as path from 'path';
 import {ArchiveUtils} from '../src/archiveUtils';

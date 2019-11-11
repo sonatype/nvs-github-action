@@ -5,7 +5,7 @@
  */
 
 import * as http from 'http';
-import * as fs from 'fs';
+import * as fs from 'graceful-fs';
 import * as https from 'https';
 import HashUtils from './hashUtils';
 import config from './config.json';
