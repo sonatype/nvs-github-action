@@ -34,27 +34,23 @@ class ArchiveUtils {
             });
             archive.pipe(zipOut);
             for (const file of files) {
-                archive.append(fs.createReadStream(file), { name: file });
+                archive.file(file, { name: file });
             }
             archive.on('error', (err) => {
                 reject(err);
                 return;
             });
-            archive.on('warning', function (err) {
-                loggingUtils_1.default.logError(err.message);
-                if (err.code === 'ENOENT') {
-                    reject(err);
-                    return;
-                }
-                else {
-                    resolve(zipFile);
-                    return;
-                }
+            archive.on('warning', (err) => {
+                reject(err);
+                return;
             });
             zipOut.on('close', () => {
                 loggingUtils_1.default.logMessage(archive.pointer() + ' total bytes');
                 resolve(zipFile);
                 return;
+            });
+            zipOut.on('end', function () {
+                loggingUtils_1.default.logMessage('Data has been drained');
             });
             archive.finalize();
         });
