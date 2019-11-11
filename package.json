@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "NVS Scanner for GitHub Action",
-  "main": "lib/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "lint:fix": "./node_modules/.bin/eslint . --ext .ts,.tsx --fix",

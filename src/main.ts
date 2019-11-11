@@ -32,14 +32,9 @@ async function run() {
     const archiveFilePath = await ArchiveUtils.zipFiles(matchedFiles);
 
     const fileUploadService = FileUploadService.from(archiveFilePath, email, password);
-    try {
-      LoggingUtils.logMessage('upload zip file to NVS...');
-      const successUrl = await fileUploadService.uploadFile();
-      LoggingUtils.logMessage(`Success url: ${successUrl}`);
-    }
-    catch (error) {
-      core.setFailed(error);
-    }
+    LoggingUtils.logMessage('upload zip file to NVS...');
+    const successUrl = await fileUploadService.uploadFile();
+    LoggingUtils.logMessage(`Success url: ${successUrl}`);
   }
   catch (error) {
     core.setFailed(error.message);
