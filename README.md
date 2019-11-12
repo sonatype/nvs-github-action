@@ -187,7 +187,7 @@ jobs:
     - name: Install dependencies
       run: |
         gem install bundler
-        bundle install
+        bundle package
     - name: Nexus Vulnerability Scanner
       uses: sonatype/nvs-github-action@releases/v1.0.0
       with:
