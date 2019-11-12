@@ -1,9 +1,9 @@
 # NVS for GitHub Actions
 
-🎉🎉🎉 GitHub Universe preview of the Nexus Vulnerability Scanner for GitHub Actions 🎉🎉🎉|
+🎉🎉🎉 GitHub Universe preview of the Nexus Vulnerability Scanner for GitHub Actions 🎉🎉🎉<br><br>This is a limited run for GitHub Universe and will be used to better inform our product direction. Usage of this service is subject to the [Terms of Service](terms-of-service.md). If you do not accept the terms do not use NVS for GitHub Actions.|
  :---- |
 
-NVS for GitHub Actions generates a Software Bill of Materials during the Actions workflow. The Software Bill of Materials contains information on the open source components that compose your application along with security vulnerabilities, applicable licenses, and architectural information associated with these components. For more information, take a look at a sample [Nexus Vulnerability Scan](https://cdn2.hubspot.net/hubfs/1958393/eBooks/AHC_Guide.pdf).
+NVS for GitHub Actions generates a Software Bill of Materials during the Actions workflow. Gain visibility into the open source components used in your application and discover potential security, licensing, and quality risk. NVS uses [Nexus Intelligence](https://www.sonatype.com/nexus-intelligence) to identify potential vulnerabilities and provides guidance for how to resolve. For more information, take a look at a sample [Nexus Vulnerability Scan](https://cdn2.hubspot.net/hubfs/1958393/eBooks/AHC_Guide.pdf).
 
 ## Inputs
 
