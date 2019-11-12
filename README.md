@@ -30,9 +30,10 @@ Java applications should be scanned alongside their dependencies. For obfuscated
 ```
 name: Maven with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -47,7 +48,7 @@ jobs:
     - name: Build with Maven
       run: mvn package dependency:copy-dependencies
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -59,9 +60,10 @@ For application bundles such as `.war`, `.ear` , `.sar` or fat `.jar`s, the pack
 ```
 name: Maven with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -76,7 +78,7 @@ jobs:
     - name: Build with Maven
       run: mvn package
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -90,9 +92,10 @@ Golang applications should use Go Modules and include the `go.sum` file.
 ```
 name: Golang with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -101,7 +104,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -115,9 +118,10 @@ For best results, the `node_modules` directory should be installed when scanning
 ```
 name: Node.js with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -131,7 +135,7 @@ jobs:
     - name: Build with npm
       run: npm ci
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -145,9 +149,10 @@ Python applications should use pip and include the `requirements.txt` file.
 ```
 name: Python with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -156,7 +161,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -170,9 +175,10 @@ For best results, the `vendor/cache` directory should be installed when scanning
 ```
 name: Ruby with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -189,7 +195,7 @@ jobs:
         gem install bundler
         bundle package
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
@@ -203,9 +209,10 @@ jobs:
 ```
 name: .NET Core with NVS
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -220,7 +227,7 @@ jobs:
     - name: Build with dotnet
       run: dotnet build
     - name: Nexus Vulnerability Scanner
-      uses: sonatype/nvs-github-action@releases/v1.0.0
+      uses: sonatype/nvs-github-action@v1.0.0
       with:
         email: your@mail.com
         password: ${{ secrets.NVS_SCANNER_PASSWORD }}
