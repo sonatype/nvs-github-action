@@ -225,7 +225,7 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      run: dotnet build
+      run: dotnet build --packages ./packages
     - name: Nexus Vulnerability Scanner
       uses: sonatype/nvs-github-action@v1.0.0
       with:
